@@ -1,17 +1,16 @@
 // import './App.css'
-import Button from "./components/ui/Button"
-import Input from "./components/ui/Input"
-import Select from "./components/ui/Select"
-import EventForm from "./pages/EventForm"
-import Login from "./pages/Login"
+import Button from "./components/ui/Button";
+import Input from "./components/ui/Input";
+import Select from "./components/ui/Select";
+import EventForm from "./components/ui/forms/EventForm";
+import Login from "./pages/Login";
 
 function App() {
-
   return (
     <>
-    <EventForm />
+      <EventForm />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

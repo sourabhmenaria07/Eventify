@@ -7,7 +7,9 @@ export class DatabasesService {
   storage;
 
   constructor() {
-    client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId);
+    this.client
+      .setEndpoint(conf.appwriteUrl)
+      .setProject(conf.appwriteProjectId);
 
     this.databases = new Databases(this.client);
     this.storage = new Storage(this.client);
