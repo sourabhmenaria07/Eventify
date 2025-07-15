@@ -95,6 +95,15 @@ export class DatabasesService {
     }
   }
 
+  async getFilePreview(fileId) {
+    try {
+      return await this.storage.getFilePreview(conf.appwriteBucketId, fileId);
+    } catch (error) {
+      console.error("Error previewing cover:", error);
+      throw error;
+    }
+  }
+
   async deleteCover(fileId) {
     try {
       await this.storage.deleteFile(conf.appwriteBucketId, fileId);

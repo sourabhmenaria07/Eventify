@@ -18,7 +18,7 @@ function EventForm({ event }) {
     control,
     setValue,
     watch,
-    formState: { errors },
+    // formState: { errors },
   } = useForm({
     defaultValues: {
       title: event?.title || "",
@@ -28,9 +28,10 @@ function EventForm({ event }) {
       isFree: event?.isFree ? "Free" : "Paid",
       price: event?.price || "",
       discount: event?.discount || "",
-      date: event?.date || "",
-      time: event?.time || "",
+      date: event?.date ? event.date.split("T")[0] : "",
+      time: event?.time ? event.date.split("T")[1]?.slice(0, 5) : "",
       location: event?.location || "",
+      organizer: userData?.name || "",
     },
   });
 
@@ -41,6 +42,10 @@ function EventForm({ event }) {
       const file = data.image[0]
         ? await databaseService.uploadCover(data.image[0])
         : null;
+
+      data.organizer = userData.name;
+      data.date = new Date(`${data.date}T${data.time}`).toISOString();
+      delete data.time;
 
       if (event) {
         if (data.slug !== event.slug) {
