@@ -127,6 +127,14 @@ function EventForm({ event }) {
     };
   }, [watch, slugTransform, setValue]);
 
+  if (event && event.userId !== userData?.$id) {
+    return (
+      <p className="text-red-500 text-center mt-10">
+        You are not authorized to edit this event.
+      </p>
+    );
+  }
+
   return (
     <>
       <h2 className="text-2xl font-semibold text-[#f06543] my-4 text-center">

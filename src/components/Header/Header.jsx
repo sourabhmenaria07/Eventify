@@ -43,6 +43,11 @@ function Header() {
       slug: "/create-event",
       active: authStatus === "loggedIn",
     },
+    {
+      name: "Bookmarks",
+      slug: "/bookmarks",
+      active: authStatus === "loggedIn",
+    },
   ];
   return (
     <header className="bg-surface text-body shadow-md">
