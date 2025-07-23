@@ -5,7 +5,9 @@ import Input from "../components/ui/Input";
 import Logo from "../components/ui/Logo";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { setGlobalLoading } from "../store/appSlice";
 import authService from "../appwrite/auth";
+import {login} from "../store/authSlice"
 
 function Login() {
   const navigate = useNavigate();
@@ -26,22 +28,46 @@ function Login() {
 
   const onSubmit = async (data) => {
     setLoading(true);
+    dispatch(setGlobalLoading(true));
     try {
       const session = await authService.login(data);
       if (session) {
         const userData = await authService.getCurrentUser();
-        if (userData?.emailVerification) {
-          dispatch(login({ userData }));
-          navigate("/dashboard");
-        } else {
-          alert("Please verify your email before logging in.");
-        }
+        // if (userData?.emailVerification) {
+        dispatch(login({ userData }));
+        navigate("/dashboard");
+        // } else {
+        //   await authService.logout(); // ensure session is cleared
+        //   navigate("/verify-pending");
+        // alert("Please verify your email before logging in.");
+        // }
       }
     } catch (error) {
       console.error("Login failed", error);
-      alert("Login failed: " + error.message);
+
+      const message =
+        error?.message || "Login failed. Please check your credentials.";
+      // alert(message);
+
+      // if (error.message?.includes("Email not verified")) {
+      //   navigate("/verify-pending");
+      // }
+
+      if (message.includes("Rate limit")) {
+        alert(
+          "You're doing that too much. Please wait a moment and try again."
+        );
+      } else if (message.includes("Email not verified")) {
+        localStorage.setItem("resendEmail", data.email);
+        localStorage.setItem("resendPassword", data.password);
+        alert("Please verify your email before logging in.");
+        navigate("/verify-pending");
+      } else {
+        alert(message);
+      }
     } finally {
       setLoading(false);
+      dispatch(setGlobalLoading(false));
     }
   };
 

@@ -39,8 +39,8 @@ function EventForm({ event }) {
 
   const onSubmit = async (data) => {
     try {
-      const file = data.image[0]
-        ? await databaseService.uploadCover(data.image[0])
+      const file = data.coverImage[0]
+        ? await databaseService.uploadCover(data.coverImage[0])
         : null;
 
       data.organizer = userData.name;
@@ -94,8 +94,11 @@ function EventForm({ event }) {
           userId: userData.$id,
         });
 
-        if (created) {
+        if (created && created.slug) {
           navigate(`/event/${created.slug}`);
+        } else {
+          console.warn("Event created but slug is missing:", created);
+          navigate("/dashboard"); // fallback
         }
       }
     } catch (error) {

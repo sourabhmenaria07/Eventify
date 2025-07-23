@@ -17,7 +17,7 @@ export class DatabasesService {
 
   async createEvent(eventData) {
     try {
-      await this.databases.createDocument(
+      return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteEventsCollectionId,
         ID.unique(),
@@ -95,9 +95,10 @@ export class DatabasesService {
     }
   }
 
-  async getFilePreview(fileId) {
+  getFilePreview(fileId) {
     try {
-      return await this.storage.getFilePreview(conf.appwriteBucketId, fileId);
+      return this.storage.getFileView(conf.appwriteBucketId, fileId);
+      
     } catch (error) {
       console.error("Error previewing cover:", error);
       throw error;

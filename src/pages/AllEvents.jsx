@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import databaseService from "../appwrite/database";
 import EventCard from "../components/EventCard";
 import { Query } from "appwrite";
+import Container from "../components/Container";
 
 function AllEvents() {
   const [events, setEvents] = useState([]);
@@ -26,7 +27,12 @@ function AllEvents() {
 
       if (res.documents.length === 0) setHasMore(false);
       else {
-        setEvents((prev) => [...prev, ...res.documents]);
+        setEvents((prev) => {
+          const combined = [...prev, ...res.documents];
+          const map = new Map();
+          combined.forEach((e) => map.set(e.$id, e));
+          return Array.from(map.values());
+        });
         setPage((prev) => prev + 1);
       }
     } catch (error) {
@@ -47,7 +53,8 @@ function AllEvents() {
     loadEvents();
   }, [loadEvents]);
 
-  const lastEventRef = useCallback((node) => {
+  const lastEventRef = useCallback(
+    (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
 
@@ -63,8 +70,9 @@ function AllEvents() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-primary mb-4">All Events</h1>
+    // <div className="w-full max-w-6xl mx-auto px-4 py-8 bg-surface">
+    <Container>
+      <h1 className="text-2xl font-bold text-body mb-4">All Events</h1>
 
       {/* Search & Filter */}
       <div className="flex flex-wrap gap-4 mb-6">
@@ -73,12 +81,12 @@ function AllEvents() {
           placeholder="Search events by title..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="px-4 py-2 border rounded w-full sm:w-1/2 bg-input"
+          className="px-4 py-2 border rounded w-full sm:w-1/2 bg-input text-body"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="px-4 py-2 border rounded bg-input"
+          className="px-4 py-2 border rounded bg-input text-body"
         >
           <option value="">All Categories</option>
           {/* We'll fill categories below dynamically */}
@@ -107,7 +115,8 @@ function AllEvents() {
       {!hasMore && !loading && (
         <p className="text-center mt-6 text-muted">No more events.</p>
       )}
-    </div>
+    </Container>
+    // {/* </div> */}
   );
 }
 

@@ -34,11 +34,6 @@ function Header() {
       active: authStatus === "loggedOut",
     },
     {
-      name: "All Posts",
-      slug: "/all-posts",
-      active: true,
-    },
-    {
       name: "Create Event",
       slug: "/create-event",
       active: authStatus === "loggedIn",
@@ -48,9 +43,14 @@ function Header() {
       slug: "/bookmarks",
       active: authStatus === "loggedIn",
     },
+    {
+      name: "Profile",
+      slug: "/profile",
+      active: authStatus === "loggedIn",
+    },
   ];
   return (
-    <header className="bg-surface text-body shadow-md">
+    <header className="bg-header text-body shadow-md">
       <div className="container px-4 py-3 flex justify-between items-center md:px-6 max-w-screen-xl mx-auto">
         <Link to="/" className="flex items-center gap-2">
           <Logo width="140px" />

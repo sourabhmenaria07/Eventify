@@ -5,7 +5,7 @@
 :root {
   --color-primary: #6366f1;
   --color-primary-hover: #7a7ce3;
-  --color-header: #fdbde3;
+  --color-header: #ffafaf;
   --color-button: #e9d0ff;
   --color-surface: #ffe8e8;
   /* --color-surface: oklch(90.972% 0.04516 251.46); */
@@ -15,7 +15,7 @@
 
 .dark {
   /* --color-primary: #818cf8; */
-  --color-header: #1a1a2e;
+  --color-header: #2a2a48;
   --color-button: #3a0ca3;
   --color-surface: #121212;
   /* --color-surface: #2B3A67; */

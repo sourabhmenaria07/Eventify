@@ -17,7 +17,7 @@ function EventPage() {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-  const isOwner = userData?.$id === event.userId;
+  // let isOwner = false;
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
@@ -38,6 +38,7 @@ function EventPage() {
   useEffect(() => {
     const checkBookmark = async () => {
       if (userData && event) {
+        // isOwner = userData.$id === event.userId;
         const bookmarks = await databaseService.getBookmarkByUser(userData.$id);
         const match = bookmarks.documents.find((b) => b.eventId === event.$id);
         if (match) {
@@ -89,6 +90,8 @@ function EventPage() {
     return <p className="text-center mt-10 text-red-500">Event not found</p>;
   }
 
+  const isOwner = userData?.$id === event.userId;
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
       <div className="flex flex-col md:flex-row md:gap-8">
@@ -129,15 +132,22 @@ function EventPage() {
           {event.isFree ? (
             <span className="text-green-600 font-semibold">Free Event</span>
           ) : (
-            <div>
-              <p className="font-medium text-lg">
-                ₹{event.price}
-                {event.discount > 0 && (
-                  <span className="ml-2 text-sm text-green-500">
-                    ({event.discount}% off)
-                  </span>
-                )}
-              </p>
+            <div className="space-y-1">
+              {event.discount > 0 ? (
+                <>
+                  <p className="text-sm text-muted line-through">
+                    ₹{event.price}
+                  </p>
+                  <p className="font-bold text-lg text-body">
+                    ₹{Math.round(event.price * (1 - event.discount / 100))}
+                    <span className="ml-2 text-sm text-green-500 font-medium">
+                      ({event.discount}% off)
+                    </span>
+                  </p>
+                </>
+              ) : (
+                <p className="font-medium text-lg">₹{event.price}</p>
+              )}
             </div>
           )}
 
@@ -147,16 +157,16 @@ function EventPage() {
           </div>
         </div>
         {isOwner && (
-          <div className="mt-6 flex justify-end gap-4">
+          <div className="flex flex-col gap-4 my-auto">
             <Button
               onClick={() => navigate(`/edit-event/${event.slug}`)}
-              className="w-full max-w-xs block mx-auto mt-10"
+              className="px-4 py-2 bg-primary text-white hover:bg-primary-hover rounded"
             >
               Edit
             </Button>
             <Button
               onClick={() => setConfirmOpen(true)}
-              className="bg-red-600 text-white px-4 py-2 hover:bg-red-700 w-full max-w-xs block mx-auto mt-10"
+              className="px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded"
             >
               Delete
             </Button>

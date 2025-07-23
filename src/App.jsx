@@ -28,7 +28,7 @@ function App() {
   return !loading ? (
     <div className="min-h-screen flex flex-col text-body bg-background transition-colors duration-300">
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow bg-surface">
         <Outlet />
       </main>
       <Footer />

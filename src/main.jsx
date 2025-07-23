@@ -21,6 +21,7 @@ import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import AllEvents from "./pages/AllEvents";
 import EditEvent from "./pages/EditEvent";
+import VerifyPending from "./pages/VerifyPending";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/verify",
         element: <VerifyEmail />,
+      },
+      {
+        path: "/verify-pending",
+        element: <VerifyPending />,
       },
       {
         path: "/forgot-password",

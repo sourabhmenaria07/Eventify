@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import databaseService from "../appwrite/database";
 import { Pencil, Trash2, Bookmark, BookmarkCheck } from "lucide-react";
 import Button from "./ui/Button";
+import { useState } from "react";
 
 function EventCard({
   event,

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import databaseService from "../appwrite/database";
-import { Trash2, Pencil, CloudCog } from "lucide-react";
+import { Query } from "appwrite";
+// import { Trash2, Pencil, CloudCog } from "lucide-react";
 import EventCard from "../components/EventCard";
 
 function Dashboard() {
@@ -90,7 +91,7 @@ function Dashboard() {
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
-            <option value="" disabled hidden>
+            <option value="" >
               --All Categories--
             </option>
             {options.map((option) => (
@@ -113,49 +114,14 @@ function Dashboard() {
         <p className="text-center text-muted">No events found.</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
+          {filteredEvents.map((event) => (
             <EventCard
               key={event.$id}
               event={event}
               showActions={true}
-              onEdit={(e) => navigate(`/edit-event/${e.$id}`)}
-              onDelete={(e) => handleDelete(e.$id)}
+              onEdit={() => navigate(`/edit-event/${event.slug}`)}
+              onDelete={handleDelete}
             />
-
-            // <div
-            //   key={event.$id}
-            //   className="bg-surface rounded-xl shadow-md overflow-hidden p-4"
-            // >
-            //   <Link to={`/event/${event.slug}`}>
-            //     <img
-            //       src={databaseService.getFilePreview(event.coverImage)}
-            //       alt={event.title}
-            //       className="w-full h-40 object-cover rounded mb-3"
-            //     />
-            //   </Link>
-            //   <div className="p-4 space-y-2 text-body">
-            //     <h2 className="text-xl font-semibold">{event.title}</h2>
-            //     <p className="text-sm text-muted">{event.category}</p>
-            //     <p className="text-sm text-muted">
-            //       {event.date} at {event.time}
-            //     </p>
-            //     <p className="text-sm text-muted">{event.location}</p>
-            //     <div className="flex gap-4 pt-3">
-            //       <button
-            //         className="text-sm text-primary hover:underline flex items-center gap-1"
-            //         onClick={() => navigate(`/edit-event/${event.slug}`)}
-            //       >
-            //         <Pencil size={16} /> Edit
-            //       </button>
-            //       <button
-            //         className="text-sm text-red-500 hover:underline flex items-center gap-1"
-            //         onClick={() => handleDelete(event)}
-            //       >
-            //         <Trash2 size={16} /> Delete
-            //       </button>
-            //     </div>
-            //   </div>
-            // </div>
           ))}
         </div>
       )}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import databaseService from "../appwrite/database";
 import EventCard from "../components/EventCard";
+import { Query } from "appwrite";
 
 function MyBookmarks() {
   const userData = useSelector((state) => state.auth.userData);
@@ -20,14 +21,18 @@ function MyBookmarks() {
 
         for (const id of eventIds) {
           const eventsRes = await databaseService.getEvents([
-            databaseService.Query.equal("$id", id),
+            Query.equal("$id", id),
           ]);
           if (eventsRes.total > 0) {
             eventList.push(eventsRes.documents[0]);
           }
         }
 
-        setEvents(eventList);
+         const uniqueMap = new Map();
+        eventList.forEach((e) => uniqueMap.set(e.$id, e));
+        setEvents(Array.from(uniqueMap.values()));
+      
+        // setEvents(eventList);
       } catch (err) {
         console.error("Error fetching bookmarks:", err);
       } finally {
@@ -67,6 +72,7 @@ function MyBookmarks() {
               key={event.$id}
               event={event}
               showBookmark={true}
+              isBookmarked={true}
               onToggleBookmark={() => handleToggleBookmark(event.$id)}
             />
           ))}

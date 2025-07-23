@@ -15,7 +15,10 @@ function SignUp() {
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = useForm();
+
+  const password = watch("password");
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -34,15 +37,14 @@ function SignUp() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-10 p-6 bg-blue-200 dark:bg-[#19264c] shadow-lg rounded-xl">
+    <div className="w-full max-w-md mx-auto my-10 p-6 bg-blue-200 dark:bg-[#19264c] shadow-lg rounded-xl">
       <div className="mb-2 flex justify-center">
         <span className="inline-block w-full max-w-[150px]">
           <Logo width="120px" />
         </span>
       </div>
       <h2 className="text-2xl font-bold mb-6 text-center text-body leading-tight">
-        {" "}
-        Create Account{" "}
+        Create Account
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <Input
@@ -73,27 +75,26 @@ function SignUp() {
         )}
         <div className="relative">
           <Input
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          placeholder="••••••••"
-          {...register("password", { required: true, minLength: 6 })}
-        />
-        <span
-          className="absolute right-4 top-10 cursor-pointer text-gray-500"
-          onClick={() => setShowPassword((prev) => !prev)}
-        >
-          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-        </span>
-        {errors.password && (
-          <p className="text-red-500 text-sm">
-            Password must be at least 6 characters
-          </p>
-        )}
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            placeholder="••••••••"
+            {...register("password", { required: true, minLength: 6 })}
+          />
+          <span
+            className="absolute right-4 top-10 cursor-pointer text-gray-500"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </span>
+          {errors.password && (
+            <p className="text-red-500 text-sm">
+              Password must be at least 6 characters
+            </p>
+          )}
         </div>
         <Input
           label="Confirm New Password"
           type="password"
-          className="w-full px-3 py-2 border rounded"
           {...register("confirmPassword", {
             required: true,
             validate: (value) => value === password || "Passwords do not match",
@@ -110,7 +111,7 @@ function SignUp() {
         <p className="mt-2 text-body text-base text-center">
           Already have an account?&nbsp;
           <Link
-            to="/signup"
+            to="/login"
             className="text-fuchsia-700 dark:text-fuchsia-300 hover:text-fuchsia-500"
           >
             Sign in

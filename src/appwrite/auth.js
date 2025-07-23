@@ -20,32 +20,81 @@ export class AuthService {
         password,
         name
       );
-      await this.account.createVerification(
-        `${window.location.origin}/verify-email`
-      );
+
+      // Log in temporarily to call verification
+      await this.account.createEmailPasswordSession(email, password);
+
+      // Send verification email
+      await this.account.createVerification(`${window.location.origin}/verify`);
+
+      // Log out immediately
+      await this.account.deleteSessions();
+
       return userAccount;
     } catch (error) {
+      //temp check again
+      const message = error?.message;
+      if (message.includes("Rate limit")) {
+        alert(
+          "You're doing that too much. Please wait a moment and try again."
+        );
+      }
+      //
       console.log("Appwrite service :: signup ::error", error);
     }
   }
 
-  async verifyEmail({ userId, secret, email, password }) {
+  // async verifyEmail({ userId, secret, email, password }) {
+  //   try {
+  //     const verified = await this.account.updateVerification(userId, secret);
+  //     console.log("✅ Email verification successful:", verified);
+  //     // await this.login({ email, password });
+  //     if (email && password) {
+  //     await this.login({ email, password });
+  //   }
+  async verifyEmail({ userId, secret }) {
     try {
-      const verified = await this.account.updateVerification(userId, secret);
-      await this.login({ email, password });
-
-      return verified;
+      return await this.account.updateVerification(userId, secret);
     } catch (error) {
       console.log("Appwrite service :: emailVerification ::error", error);
+      throw error;
+    }
+  }
+
+  async sendVerificationEmail({ email, password }) {
+    try {
+      await this.account.createEmailPasswordSession(email, password);
+      const result = await this.account.createVerification(
+        `${window.location.origin}/verify`
+      );
+
+      await this.account.deleteSessions();
+
+      return result;
+    } catch (error) {
+      console.error("Appwrite service :: resend verification :: error", error);
+      throw error;
     }
   }
 
   async login({ email, password }) {
-    try {
-      return await this.account.createEmailPasswordSession(email, password);
-    } catch (error) {
-      console.log("Appwrite service :: login ::error", error);
+    // try {
+    const session = await this.account.createEmailPasswordSession(
+      email,
+      password
+    );
+    const user = await this.getCurrentUser();
+
+    if (!user.emailVerification) {
+      // Optionally log them out immediately
+      await this.logout();
+      throw new Error("Email not verified. Please check your inbox.");
     }
+
+    return session;
+    // } catch (error) {
+    //   console.log("Appwrite service :: login ::error", error);
+    // }
   }
 
   async getCurrentUser() {
