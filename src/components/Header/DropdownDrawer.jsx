@@ -9,11 +9,11 @@ export default function DropdownDrawer({ isOpen, onClose, navItems }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black bg-opacity-50 md:hidden"
+      className="fixed inset-0 z-50 bg-white/10 backdrop-blur-sm lg:hidden"
       onClick={onClose}
     >
       <div
-        className="fixed top-0 left-0 w-3/4 h-full bg-surface p-6 flex flex-col shadow-lg"
+        className="fixed top-0 right-0 w-3/4 h-full bg-surface p-6 flex flex-col shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-6">

@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import {ToggleTheme, LogoutBtn, Logo} from "../ui/ui";
+import {ToggleTheme, Logo} from "../ui/ui";
+import LogoutBtn from "./LogoutBtn";
 import { useState } from "react";
 import DropdownDrawer from "./DropdownDrawer";
 
@@ -54,7 +55,7 @@ function Header() {
           <Logo width="140px" />
         </Link>
 
-        <nav className="hidden sm:flex items-center space-x-6">
+        <nav className="hidden lg:flex items-center space-x-6">
           <ul className="flex ml-auto gap-2">
             {navItems.map((item) =>
               item.active ? (
@@ -74,12 +75,12 @@ function Header() {
             )}
           </ul>
         </nav>
-        <div className="hidden sm:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-4">
           <ToggleTheme />
           {authStatus === "loggedIn" && <LogoutBtn />}
         </div>
         <button
-          className="sm:hidden focus:outline-none"
+          className="lg:hidden focus:outline-none"
           onClick={() => setMenuOpen(true)}
         >
           <Menu size={28} />
