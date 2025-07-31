@@ -3,8 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import authService from "../appwrite/auth";
 import { Eye, EyeOff } from "lucide-react";
-import Input from "../components/ui/Input";
-import Button from "../components/ui/Button";
+import {Input, Button} from "../components/ui/ui";
 
 function ResetPassword() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();

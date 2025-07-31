@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import databaseService from "../appwrite/database";
-import Button from "../components/ui/Button";
-import ConfirmModal from "../components/ui/ConfirmModal";
+import {Button, ConfirmModal} from "../components/ui/ui";
 
 function EventPage() {
   const { slug } = useParams();

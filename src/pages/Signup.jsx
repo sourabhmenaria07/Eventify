@@ -1,11 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
-import Button from "../components/ui/Button";
-import Input from "../components/ui/Input";
+import {Button, Input, Logo} from "../components/ui/ui";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import Logo from "../components/ui/Logo";
 
 function SignUp() {
   const navigate = useNavigate();

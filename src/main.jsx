@@ -8,20 +8,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import AuthLayout from "./layouts/AuthLayout";
-
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-import EventPage from "./pages/EventPage";
 import EventForm from "./components/ui/forms/EventForm";
-import MyBookmarks from "./pages/MyBookmarks";
-import Profile from "./pages/Profile";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import VerifyEmail from "./pages/VerifyEmail";
-import AllEvents from "./pages/AllEvents";
-import EditEvent from "./pages/EditEvent";
-import VerifyPending from "./pages/VerifyPending";
+
+import {Login, Signup, Dashboard, EventPage, MyBookmarks, Profile, ForgotPassword, ResetPassword, VerifyEmail, 
+  AllEvents, EditEvent, VerifyPending} from "./pages/index";
+
 
 const router = createBrowserRouter([
   {

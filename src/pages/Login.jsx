@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Button from "../components/ui/Button";
-import Input from "../components/ui/Input";
-import Logo from "../components/ui/Logo";
+import {Button, Input, Logo} from "../components/ui/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setGlobalLoading } from "../store/appSlice";

@@ -1,9 +1,7 @@
-// ForgotPassword.jsx
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import authService from "../appwrite/auth";
-import Input from "../components/ui/Input";
-import Button from "../components/ui/Button";
+import {Input, Button} from "../components/ui/ui";
 
 function ForgotPassword() {
   const { register, handleSubmit } = useForm();

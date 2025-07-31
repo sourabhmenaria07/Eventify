@@ -1,9 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../ui/Logo";
 import { Menu, X } from "lucide-react";
-import ToggleTheme from "../ui/ToggleTheme";
-import LogoutBtn from "./LogoutBtn";
+import {ToggleTheme, LogoutBtn, Logo} from "../ui/ui";
 import { useState } from "react";
 import DropdownDrawer from "./DropdownDrawer";
 

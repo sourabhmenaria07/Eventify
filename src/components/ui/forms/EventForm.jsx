@@ -2,12 +2,8 @@ import { useForm } from "react-hook-form";
 import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Input from "../Input";
-import Select from "../Select";
-import ToggleBtn from "../ToggleBtn";
-import Textarea from "../Textarea";
+import { Input, Select, ToggleBtn, Textarea, Button } from "../ui";
 import databaseService from "../../../appwrite/database";
-import Button from "../Button";
 
 function EventForm({ event }) {
   const userData = useSelector((state) => state.auth.userData);
